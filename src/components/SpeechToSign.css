@@ -1,0 +1,117 @@
+.speech-to-sign {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.mic-button {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.mic-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.mic-button.listening {
+  background: linear-gradient(45deg, #ff4757, #c44569);
+  animation: pulse 1.5s infinite;
+}
+
+.clear-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clear-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.listening-indicator {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.pulse {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 0 auto 10px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.error-message {
+  background: rgba(255, 107, 107, 0.1);
+  border: 2px solid #ff6b6b;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.error-message h3 {
+  margin-top: 0;
+  color: #ff6b6b;
+}
+
+.error-message ul {
+  text-align: left;
+  display: inline-block;
+}
+
+.transcript {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.transcript h3 {
+  margin-top: 0;
+  color: #fff;
+}
+
+.transcript p {
+  font-size: 1.1rem;
+  font-style: italic;
+  margin-bottom: 0;
+}
