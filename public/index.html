@@ -3,18 +3,117 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="theme-color" content="#4a90e2" />
+    <meta name="msapplication-TileColor" content="#4a90e2" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Speech to Sign" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta
       name="description"
-      content="Speech to Sign Language Translator - Convert spoken words to sign language representations"
+      content="Convert spoken words into American Sign Language with real-time speech recognition and fingerspelling images. Works offline as a PWA."
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <meta name="keywords" content="ASL, American Sign Language, speech recognition, accessibility, PWA, fingerspelling" />
+    <meta name="author" content="Speech to Sign App" />
+    
+    <!-- PWA Icons -->
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/signApp.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="%PUBLIC_URL%/signApp.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="%PUBLIC_URL%/signApp.png" />
+    
+    <!-- Manifest -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="%PUBLIC_URL%/signs/a.jpg" as="image" />
+    <link rel="preload" href="%PUBLIC_URL%/signs/e.jpg" as="image" />
+    <link rel="preload" href="%PUBLIC_URL%/signs/i.jpg" as="image" />
+    <link rel="preload" href="%PUBLIC_URL%/signs/o.jpg" as="image" />
+    <link rel="preload" href="%PUBLIC_URL%/signs/u.jpg" as="image" />
+    
     <title>Speech to Sign Language Translator</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+              console.log('SW registered: ', registration);
+              
+              // Check for updates
+              registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                newWorker.addEventListener('statechange', () => {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    // Show update available notification
+                    if (confirm('New version available! Click OK to update.')) {
+                      window.location.reload();
+                    }
+                  }
+                });
+              });
+            })
+            .catch(function(registrationError) {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+
+      // Install prompt
+      let deferredPrompt;
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        
+        // Show install button or notification
+        const installBtn = document.createElement('button');
+        installBtn.textContent = 'Install App';
+        installBtn.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: #4a90e2;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 25px;
+          cursor: pointer;
+          z-index: 1000;
+          font-family: Arial, sans-serif;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        `;
+        
+        installBtn.addEventListener('click', () => {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('User accepted the install prompt');
+              installBtn.remove();
+            }
+            deferredPrompt = null;
+          });
+        });
+        
+        document.body.appendChild(installBtn);
+        
+        // Auto-hide after 10 seconds
+        setTimeout(() => {
+          if (installBtn.parentNode) {
+            installBtn.remove();
+          }
+        }, 10000);
+      });
+
+      // Track install success
+      window.addEventListener('appinstalled', (evt) => {
+        console.log('App was installed successfully');
+      });
+    </script>
   </body>
 </html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PWA Icon Generator</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1dd1a1, #feca57);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        canvas {
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+            margin: 10px;
+        }
+        button {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #357ABD;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PWA Icon Generator</h1>
+        <p>Click the buttons below to generate and download app icons:</p>
+        
+        <canvas id="canvas192" width="192" height="192"></canvas>
+        <canvas id="canvas512" width="512" height="512"></canvas>
+        
+        <br>
+        <button onclick="generateIcons()">Generate Icons</button>
+        <button onclick="downloadIcon(192)">Download 192x192</button>
+        <button onclick="downloadIcon(512)">Download 512x512</button>
+    </div>
+
+    <script>
+        function generateIcons() {
+            [192, 512].forEach(size => {
+                const canvas = document.getElementById(`canvas${size}`);
+                const ctx = canvas.getContext('2d');
+                
+                // Clear canvas
+                ctx.clearRect(0, 0, size, size);
+                
+                // Background gradient
+                const gradient = ctx.createLinearGradient(0, 0, size, size);
+                gradient.addColorStop(0, '#4a90e2');
+                gradient.addColorStop(1, '#9b59b6');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, size, size);
+                
+                // Add border radius effect
+                ctx.globalCompositeOperation = 'destination-in';
+                ctx.beginPath();
+                ctx.roundRect(0, 0, size, size, size * 0.1);
+                ctx.fill();
+                ctx.globalCompositeOperation = 'source-over';
+                
+                // Draw hand gesture icon
+                ctx.fillStyle = 'white';
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = size * 0.02;
+                
+                const centerX = size / 2;
+                const centerY = size / 2;
+                const scale = size / 192; // Scale factor
+                
+                // Draw simplified hand sign
+                ctx.beginPath();
+                // Palm
+                ctx.ellipse(centerX, centerY + 10 * scale, 25 * scale, 35 * scale, 0, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Fingers
+                for (let i = 0; i < 4; i++) {
+                    const x = centerX - 15 * scale + i * 10 * scale;
+                    const y = centerY - 20 * scale;
+                    ctx.fillRect(x - 3 * scale, y, 6 * scale, 20 * scale);
+                }
+                
+                // Thumb
+                ctx.beginPath();
+                ctx.ellipse(centerX - 25 * scale, centerY + 5 * scale, 8 * scale, 15 * scale, -0.5, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Add text
+                ctx.fillStyle = 'white';
+                ctx.font = `bold ${size * 0.08}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.fillText('SPEECH', centerX, centerY + 50 * scale);
+                ctx.fillText('TO SIGN', centerX, centerY + 65 * scale);
+            });
+        }
+        
+        function downloadIcon(size) {
+            const canvas = document.getElementById(`canvas${size}`);
+            const link = document.createElement('a');
+            link.download = `icon-${size}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // Generate icons on page load
+        window.onload = generateIcons;
+    </script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 import React from 'react';
 import SpeechToSign from './components/SpeechToSign';
+import PWAStatus from './components/PWAStatus';
 import './App.css';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <main>
         <SpeechToSign />
       </main>
+      <PWAStatus />
     </div>
   );
 }
