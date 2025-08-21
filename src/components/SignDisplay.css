@@ -26,12 +26,12 @@
 }
 
 .play-button {
-  background: linear-gradient(45deg, #10ac84, #00d2d3);
+  background: linear-gradient(45deg, #4a90e2, #357abd);
   color: white;
 }
 
 .stop-button {
-  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+  background: linear-gradient(45deg, #ff6348, #ff3742);
   color: white;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .sign-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: #4a90e2;
   border-radius: 15px;
   padding: 20px;
   text-align: center;
@@ -58,22 +58,22 @@
 
 .sign-card:hover {
   transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.15);
+  background: #357abd;
 }
 
 .sign-card.active {
-  border-color: #10ac84;
-  background: rgba(16, 172, 132, 0.2);
+  border-color: #4a90e2;
+  background: rgba(74, 144, 226, 0.2);
   transform: scale(1.05);
-  box-shadow: 0 8px 25px rgba(16, 172, 132, 0.3);
+  box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
 }
 
 .sign-card.sign {
-  border-left: 4px solid #10ac84;
+  border-left: 4px solid #4a90e2;
 }
 
 .sign-card.fingerspell {
-  border-left: 4px solid #ff9ff3;
+  border-left: 4px solid #9b59b6;
 }
 
 .sign-visual {
@@ -86,11 +86,11 @@
 }
 
 .sign-icon {
-  color: #10ac84;
+  color: #4a90e2;
 }
 
 .fingerspell-icon {
-  color: #ff9ff3;
+  color: #9b59b6;
 }
 
 .sign-info .word {
@@ -104,7 +104,7 @@
 .sign-representation {
   font-size: 1.4rem;
   font-weight: bold;
-  color: #ffd700;
+  color: #feca57;
   margin-bottom: 8px;
   min-height: 40px;
   display: flex;
@@ -162,7 +162,7 @@
   height: 60px;
   object-fit: cover;
   border-radius: 8px;
-  border: 2px solid #ff9ff3;
+  border: 2px solid #9b59b6;
   background: white;
   padding: 2px;
 }
@@ -173,18 +173,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ff9ff3;
+  background: #9b59b6;
   color: white;
   font-weight: bold;
   font-size: 1.5rem;
   border-radius: 8px;
-  border: 2px solid #ff9ff3;
+  border: 2px solid #9b59b6;
 }
 
 .letter-label {
   font-size: 0.8rem;
   font-weight: bold;
-  color: #ff9ff3;
+  color: #9b59b6;
   text-align: center;
 }
 
@@ -196,7 +196,7 @@
 .sign-card.fingerspell .fingerspell-letters {
   min-height: 80px;
   padding: 10px;
-  background: rgba(255, 159, 243, 0.1);
+  background: rgba(155, 89, 182, 0.1);
   border-radius: 8px;
   margin: 10px 0;
 }

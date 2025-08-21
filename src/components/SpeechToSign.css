@@ -16,7 +16,7 @@
   font-size: 1.2rem;
   border: none;
   border-radius: 50px;
-  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+  background: linear-gradient(45deg, #ff6348, #ff3742);
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -29,7 +29,7 @@
 }
 
 .mic-button.listening {
-  background: linear-gradient(45deg, #ff4757, #c44569);
+  background: linear-gradient(45deg, #1dd1a1, #10ac84);
   animation: pulse 1.5s infinite;
 }
 
@@ -79,8 +79,8 @@
 }
 
 .error-message {
-  background: rgba(255, 107, 107, 0.1);
-  border: 2px solid #ff6b6b;
+  background: rgba(255, 99, 72, 0.1);
+  border: 2px solid #ff6348;
   border-radius: 10px;
   padding: 15px;
   margin: 20px 0;
@@ -89,7 +89,7 @@
 
 .error-message h3 {
   margin-top: 0;
-  color: #ff6b6b;
+  color: #ff6348;
 }
 
 .error-message ul {
