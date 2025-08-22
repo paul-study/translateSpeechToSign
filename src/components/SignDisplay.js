@@ -15,7 +15,8 @@ const SignDisplay = ({ words }) => {
         type: 'sign',
         word: normalizedWord,
         display: SignDictionary[normalizedWord].display,
-        description: SignDictionary[normalizedWord].description
+        description: SignDictionary[normalizedWord].description,
+        video: SignDictionary[normalizedWord].video || null
       };
     }
     
@@ -83,7 +84,20 @@ const SignDisplay = ({ words }) => {
             >
               <div className="sign-visual">
                 {signData.type === 'sign' ? (
-                  <div className="sign-icon">🤟</div>
+                  signData.video ? (
+                    <video 
+                      className="sign-video"
+                      controls
+                      muted
+                      playsInline
+                      preload="metadata"
+                    >
+                      <source src={signData.video} type="video/mp4" />
+                      <div className="sign-icon">🤟</div>
+                    </video>
+                  ) : (
+                    <div className="sign-icon">🤟</div>
+                  )
                 ) : (
                   <div className="fingerspell-icon">✋</div>
                 )}

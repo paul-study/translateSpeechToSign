@@ -6,14 +6,24 @@ const urlsToCache = [
   '/manifest.json',
   '/favicon.ico',
   '/signApp.png',
-  // Cache all sign images
-  '/signs/a.jpg', '/signs/b.jpg', '/signs/c.jpg', '/signs/d.jpg', 
-  '/signs/e.jpg', '/signs/f.jpg', '/signs/g.jpg', '/signs/h.jpg',
-  '/signs/i.jpg', '/signs/j.jpg', '/signs/k.jpg', '/signs/l.jpg',
-  '/signs/m.jpg', '/signs/n.jpg', '/signs/o.jpg', '/signs/p.jpg',
-  '/signs/q.jpg', '/signs/r.jpg', '/signs/s.jpg', '/signs/t.jpg',
-  '/signs/u.jpg', '/signs/v.jpg', '/signs/w.jpg', '/signs/x.jpg',
-  '/signs/y.jpg', '/signs/z.jpg'
+  // Cache all sign images from nz folder
+  '/signs/nz/a.jpg', '/signs/nz/b.jpg', '/signs/nz/c.jpg', '/signs/nz/d.jpg', 
+  '/signs/nz/e.jpg', '/signs/nz/f.jpg', '/signs/nz/g.jpg', '/signs/nz/h.jpg',
+  '/signs/nz/i.jpg', '/signs/nz/j.jpg', '/signs/nz/k.jpg', '/signs/nz/l.jpg',
+  '/signs/nz/m.jpg', '/signs/nz/n.jpg', '/signs/nz/o.jpg', '/signs/nz/p.jpg',
+  '/signs/nz/q.jpg', '/signs/nz/r.jpg', '/signs/nz/s.jpg', '/signs/nz/t.jpg',
+  '/signs/nz/u.jpg', '/signs/nz/v.jpg', '/signs/nz/w.jpg', '/signs/nz/x.jpg',
+  '/signs/nz/y.jpg', '/signs/nz/z.jpg',
+  // Cache commonly used NZ video signs
+  '/signs/nzVideo/hello.mp4', '/signs/nzVideo/goodbye.mp4', '/signs/nzVideo/please.mp4',
+  '/signs/nzVideo/thanks.mp4', '/signs/nzVideo/sorry.mp4', '/signs/nzVideo/i.mp4',
+  '/signs/nzVideo/me.mp4', '/signs/nzVideo/go.mp4', '/signs/nzVideo/come.mp4',
+  '/signs/nzVideo/drink.mp4', '/signs/nzVideo/sleep.mp4', '/signs/nzVideo/mother.mp4',
+  '/signs/nzVideo/father.mp4', '/signs/nzVideo/dad.mp4', '/signs/nzVideo/sister.mp4',
+  '/signs/nzVideo/brother.mp4', '/signs/nzVideo/water.mp4', '/signs/nzVideo/with.mp4',
+  '/signs/nzVideo/bad.mp4', '/signs/nzVideo/yellow.mp4', '/signs/nzVideo/walk.mp4',
+  '/signs/nzVideo/study.mp4', '/signs/nzVideo/bike.mp4', '/signs/nzVideo/people.mp4',
+  '/signs/nzVideo/group.mp4', '/signs/nzVideo/tired.mp4', '/signs/nzVideo/to.mp4'
 ];
 
 // Install event - cache resources
