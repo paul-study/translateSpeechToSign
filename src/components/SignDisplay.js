@@ -1,10 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import SignDictionary from '../data/signDictionary';
 import './SignDisplay.css';
 
 const SignDisplay = ({ words }) => {
   const [currentSignIndex, setCurrentSignIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [autoplayEnabled, setAutoplayEnabled] = useState(false);
+  const videoRefs = useRef([]);
+
+  // Function to enable autoplay after user interaction
+  const enableAutoplay = async () => {
+    setAutoplayEnabled(true);
+    // Try to play all current videos to test autoplay
+    for (let video of videoRefs.current) {
+      if (video && video.play) {
+        try {
+          await video.play();
+          video.pause(); // Pause after successful play test
+        } catch (error) {
+          console.log('Autoplay test failed:', error.message);
+        }
+      }
+    }
+  };
+
+  // Function to play all videos when words change
+  useEffect(() => {
+    if (words && words.length > 0 && autoplayEnabled) {
+      console.log('Words changed, attempting to play videos:', words);
+      // Small delay to ensure videos are loaded
+      const timer = setTimeout(() => {
+        videoRefs.current.forEach((video, index) => {
+          if (video && video.play) {
+            console.log(`Attempting to play video ${index}`);
+            video.currentTime = 0; // Reset to beginning
+            video.play().catch(error => {
+              console.log(`Video ${index} autoplay failed:`, error.message);
+              // Fallback: try playing on user interaction
+            });
+          }
+        });
+      }, 200); // Increased delay
+      
+      return () => clearTimeout(timer);
+    }
+  }, [words, autoplayEnabled]);
+
+  const handleVideoRef = (element, index) => {
+    if (element) {
+      videoRefs.current[index] = element;
+    }
+  };
 
   const getSignForWord = (word) => {
     const normalizedWord = word.toLowerCase();
@@ -59,6 +105,16 @@ const SignDisplay = ({ words }) => {
     <div className="sign-display">
       <div className="sign-controls">
         <h3>🤟 Sign Language Translation:</h3>
+        
+        {!autoplayEnabled && (
+          <div className="autoplay-controls">
+            <button className="enable-autoplay-button" onClick={enableAutoplay}>
+              🎬 Enable Video Autoplay
+            </button>
+            <p className="autoplay-hint">Click to enable automatic video playback when you speak</p>
+          </div>
+        )}
+        
         <div className="playback-controls">
           {!isPlaying ? (
             <button className="play-button" onClick={playSequence}>
@@ -86,11 +142,37 @@ const SignDisplay = ({ words }) => {
                 {signData.type === 'sign' ? (
                   signData.video ? (
                     <video 
+                      ref={(el) => handleVideoRef(el, index)}
                       className="sign-video"
                       controls
                       muted
+                      autoplay
                       playsInline
-                      preload="metadata"
+                      preload="auto"
+                      loop
+                      onClick={(e) => {
+                        // Manual play on click if autoplay failed
+                        if (e.target.paused) {
+                          e.target.currentTime = 0;
+                          e.target.play();
+                        }
+                      }}
+                      onLoadedData={(e) => {
+                        // Try to play when video data is loaded
+                        console.log('Video loaded, attempting autoplay');
+                        e.target.play().catch(err => {
+                          console.log('Autoplay prevented:', err.message);
+                        });
+                      }}
+                      onCanPlay={(e) => {
+                        // Additional attempt when video can play
+                        if (e.target.paused) {
+                          console.log('Video can play, attempting autoplay');
+                          e.target.play().catch(err => {
+                            console.log('Autoplay prevented on canplay:', err.message);
+                          });
+                        }
+                      }}
                     >
                       <source src={signData.video} type="video/mp4" />
                       <div className="sign-icon">🤟</div>

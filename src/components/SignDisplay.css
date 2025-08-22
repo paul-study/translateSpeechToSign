@@ -16,6 +16,38 @@
   margin-bottom: 20px;
 }
 
+.autoplay-controls {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.enable-autoplay-button {
+  padding: 12px 30px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  background: linear-gradient(45deg, #e74c3c, #c0392b);
+  color: white;
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.enable-autoplay-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+}
+
+.autoplay-hint {
+  font-size: 0.9rem;
+  color: #bbb;
+  margin: 0;
+  text-align: center;
+}
+
 .play-button, .stop-button {
   padding: 10px 25px;
   font-size: 1rem;
@@ -101,11 +133,37 @@
   margin-bottom: 10px;
   background: #f0f0f0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sign-video:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .sign-video:focus {
   outline: 2px solid #4a90e2;
   outline-offset: 2px;
+}
+
+.video-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.play-hint {
+  font-size: 0.8rem;
+  color: #bbb;
+  margin-top: 5px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.video-container:hover .play-hint {
+  opacity: 1;
 }
 
 .sign-info .word {
