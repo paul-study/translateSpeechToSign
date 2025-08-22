@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import SignDictionary from '../data/signDictionary';
 import './SignDisplay.css';
 
+// Component for displaying sign language translations without descriptions
 const SignDisplay = ({ words }) => {
   const [currentSignIndex, setCurrentSignIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -61,7 +62,6 @@ const SignDisplay = ({ words }) => {
         type: 'sign',
         word: normalizedWord,
         display: SignDictionary[normalizedWord].display,
-        description: SignDictionary[normalizedWord].description,
         video: SignDictionary[normalizedWord].video || null
       };
     }
@@ -75,8 +75,7 @@ const SignDisplay = ({ words }) => {
         imagePath: SignDictionary.fingerspelling && SignDictionary.fingerspelling[letter] 
           ? SignDictionary.fingerspelling[letter] 
           : null
-      })),
-      description: `Fingerspell: ${normalizedWord}`
+      }))
     };
   };
 
@@ -104,7 +103,7 @@ const SignDisplay = ({ words }) => {
   return (
     <div className="sign-display">
       <div className="sign-controls">
-        <h3>🤟 Sign Language Translation:</h3>
+        <h3>🤟 NZ Sign Language Translation:</h3>
         
         {!autoplayEnabled && (
           <div className="autoplay-controls">
@@ -206,7 +205,6 @@ const SignDisplay = ({ words }) => {
                     ))}
                   </div>
                 )}
-                <div className="sign-description">{signData.description}</div>
               </div>
             </div>
           );
