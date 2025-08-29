@@ -1,58 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import SignDictionary from '../data/signDictionary';
 import './SignDisplay.css';
 
 // Component for displaying sign language translations without descriptions
 const SignDisplay = ({ words }) => {
-  const [currentSignIndex, setCurrentSignIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [autoplayEnabled, setAutoplayEnabled] = useState(false);
-  const videoRefs = useRef([]);
-
-  // Function to enable autoplay after user interaction
-  const enableAutoplay = async () => {
-    setAutoplayEnabled(true);
-    // Try to play all current videos to test autoplay
-    for (let video of videoRefs.current) {
-      if (video && video.play) {
-        try {
-          await video.play();
-          video.pause(); // Pause after successful play test
-        } catch (error) {
-          console.log('Autoplay test failed:', error.message);
-        }
-      }
-    }
-  };
-
-  // Function to play all videos when words change
-  useEffect(() => {
-    if (words && words.length > 0 && autoplayEnabled) {
-      console.log('Words changed, attempting to play videos:', words);
-      // Small delay to ensure videos are loaded
-      const timer = setTimeout(() => {
-        videoRefs.current.forEach((video, index) => {
-          if (video && video.play) {
-            console.log(`Attempting to play video ${index}`);
-            video.currentTime = 0; // Reset to beginning
-            video.play().catch(error => {
-              console.log(`Video ${index} autoplay failed:`, error.message);
-              // Fallback: try playing on user interaction
-            });
-          }
-        });
-      }, 200); // Increased delay
-      
-      return () => clearTimeout(timer);
-    }
-  }, [words, autoplayEnabled]);
-
-  const handleVideoRef = (element, index) => {
-    if (element) {
-      videoRefs.current[index] = element;
-    }
-  };
-
   const getSignForWord = (word) => {
     const normalizedWord = word.toLowerCase();
     
@@ -79,99 +30,32 @@ const SignDisplay = ({ words }) => {
     };
   };
 
-  const playSequence = () => {
-    setIsPlaying(true);
-    setCurrentSignIndex(0);
-    
-    const interval = setInterval(() => {
-      setCurrentSignIndex(prev => {
-        if (prev >= words.length - 1) {
-          clearInterval(interval);
-          setIsPlaying(false);
-          return 0;
-        }
-        return prev + 1;
-      });
-    }, 2000); // 2 seconds per sign
-  };
-
-  const stopSequence = () => {
-    setIsPlaying(false);
-    setCurrentSignIndex(0);
-  };
-
   return (
     <div className="sign-display">
       <div className="sign-controls">
         <h3>🤟 NZ Sign Language Translation:</h3>
-        
-        {!autoplayEnabled && (
-          <div className="autoplay-controls">
-            <button className="enable-autoplay-button" onClick={enableAutoplay}>
-              🎬 Enable Video Autoplay
-            </button>
-            <p className="autoplay-hint">Click to enable automatic video playback when you speak</p>
-          </div>
-        )}
-        
-        <div className="playback-controls">
-          {!isPlaying ? (
-            <button className="play-button" onClick={playSequence}>
-              ▶️ Play Sequence
-            </button>
-          ) : (
-            <button className="stop-button" onClick={stopSequence}>
-              ⏹️ Stop
-            </button>
-          )}
-        </div>
       </div>
 
       <div className="signs-container">
         {words.map((word, index) => {
           const signData = getSignForWord(word);
-          const isActive = isPlaying && index === currentSignIndex;
           
           return (
             <div 
               key={index} 
-              className={`sign-card ${isActive ? 'active' : ''} ${signData.type}`}
+              className={`sign-card ${signData.type}`}
             >
               <div className="sign-visual">
                 {signData.type === 'sign' ? (
                   signData.video ? (
                     <video 
-                      ref={(el) => handleVideoRef(el, index)}
                       className="sign-video"
                       controls
                       muted
-                      autoplay
+                      autoPlay
                       playsInline
                       preload="auto"
                       loop
-                      onClick={(e) => {
-                        // Manual play on click if autoplay failed
-                        if (e.target.paused) {
-                          e.target.currentTime = 0;
-                          e.target.play();
-                        }
-                      }}
-                      onLoadedData={(e) => {
-                        // Try to play when video data is loaded
-                        console.log('Video loaded, attempting autoplay');
-                        e.target.play().catch(err => {
-                          console.log('Autoplay prevented:', err.message);
-                        });
-                      }}
-                      onCanPlay={(e) => {
-                        // Additional attempt when video can play
-                        if (e.target.paused) {
-                          console.log('Video can play, attempting autoplay');
-                          e.target.play().catch(err => {
-                            console.log('Autoplay prevented on canplay:', err.message);
-                          });
-                        }
-                      }}
                     >
                       <source src={signData.video} type="video/mp4" />
                       <div className="sign-icon">🤟</div>
