@@ -1,4 +1,4 @@
-const CACHE_NAME = 'speech-to-sign-v1';
+const CACHE_NAME = 'speech-to-sign-v2';
 const urlsToCache = [
   '/',
   '/static/js/bundle.js',

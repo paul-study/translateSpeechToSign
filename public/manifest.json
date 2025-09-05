@@ -1,6 +1,7 @@
 {
   "short_name": "Speech to Sign",
   "name": "Speech to Sign Language Translator",
+  "version": "2.0.0",
   "description": "Convert spoken words into American Sign Language with real-time speech recognition and fingerspelling images.",
   "icons": [
     {
